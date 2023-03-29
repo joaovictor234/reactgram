@@ -35,7 +35,7 @@ const deletePhoto = async (req, res) => {
   const reqUser = req.user;
 
   try {
-    const photo = await Photo.findById(mongoose.Types.ObjectId(id));
+    const photo = await Photo.findById(new mongoose.Types.ObjectId(id));
 
     //check if photo exists
     if (!photo) {
@@ -76,7 +76,7 @@ const getUserPhotos = async(req, res) => {
 //get photo by id
 const getPhotoById = async (req, res) => {
   const {id} = req.params;
-  const photo = await Photo.findById(mongoose.Types.ObjectId(id));
+  const photo = await Photo.findById(new mongoose.Types.ObjectId(id));
 
   //check if photo exists
   if(!photo) {
@@ -131,7 +131,7 @@ const likePhoto = async (req, res) => {
   }
 
   //put user id in likes array
-  photos.likes.push(reqUser._id);
+  photo.likes.push(reqUser._id);
   photo.save()
   res
     .status(200)
