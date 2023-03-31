@@ -45,6 +45,9 @@ function App() {
             <Route
               path="/register"
               element={!auth ? <Register /> : <Navigate to="/" />} />
+            <Route
+              path="/photos/:id"
+              element={auth ? <Register /> : <Navigate to="/login" />} />
           </Routes>
         </div>
         <Footer />
