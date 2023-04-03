@@ -11,11 +11,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 //redux
-import {logout, reset} from '../slices/authSlice';
+import { logout, reset } from '../slices/authSlice';
 
 const Navbar = () => {
   const { auth } = useAuth();
   const { user } = useSelector((state) => state.auth);
+
+  const [query, setQuery] = useState('');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,11 +29,18 @@ const Navbar = () => {
     navigate("/login")
   }
 
+  const handleSearch = e => {
+    e.preventDefault();
+    if(query) {
+      return navigate(`/search?q=${query}`);
+    }
+  }
+
   return <nav id="navbar">
     <Link to="/">ReactGram</Link>
-    <form id="search-form">
+    <form id="search-form" onSubmit={handleSearch}>
       <BsSearch />
-      <input type="text" placeholder='pesquisar' />
+      <input type="text" placeholder='Pesquisar' onChange={e => setQuery(e.target.value)} />
     </form>
     <ul id="nav-links">
       {
@@ -45,13 +54,13 @@ const Navbar = () => {
             {user &&
               <li>
                 <NavLink to={`/users/${user._id}`}>
-                  <BsFillCameraFill/>
+                  <BsFillCameraFill />
                 </NavLink>
               </li>
             }
             <li>
               <NavLink to="/profile">
-                <BsFillPersonFill/>
+                <BsFillPersonFill />
               </NavLink>
             </li>
             <li>
